@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pawport - Wishlist</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f4f6f8;
+        color: #333;
+    }
+
+    /* Header */
+    header {
+        background-color: #2a6f97; /* blue */
+        color: white;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    header h1 {
+        margin: 0;
+    }
+
+    /* Layout */
+    .container {
+        max-width: 900px;
+        margin: 2rem auto;
+        padding: 1rem;
+    }
+
+    /* Wishlist Card */
+    .wishlist-item {
+        background: white;
+        border-left: 6px solid #8b5e3c; /* brown */
+        border-radius: 8px;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .item-info {
+        max-width: 70%;
+    }
+
+    .item-info h3 {
+        margin: 0 0 0.3rem 0;
+        color: #2a6f97;
+    }
+
+    .item-info p {
+        margin: 0.2rem 0;
+        color: #666;
+    }
+
+    .tags {
+        margin-top: 0.5rem;
+    }
+
+    .tag {
+        display: inline-block;
+        background-color: #d9d9d9; /* grey */
+        color: #333;
+        padding: 3px 8px;
+        border-radius: 4px;
+        margin-right: 5px;
+        font-size: 0.8rem;
+    }
+
+    /* Buttons */
+    .actions button {
+        border: none;
+        padding: 0.5rem 0.8rem;
+        margin-left: 5px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .view-btn {
+        background-color: #2a6f97;
+        color: white;
+    }
+
+    .remove-btn {
+        background-color: #8b5e3c;
+        color: white;
+    }
+
+    .view-btn:hover {
+        background-color: #1f5676;
+    }
+
+    .remove-btn:hover {
+        background-color: #6e472d;
+    }
+
+    /* Empty state (future use) */
+    .empty {
+        text-align: center;
+        color: #888;
+        margin-top: 3rem;
+    }
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>🐾 Pawport</h1>
+    <div>Welcome, Alex</div>
+</header>
+
+<div class="container">
+    <h2>Your Wishlist</h2>
+
+    <!-- Wishlist Item 1 -->
+    <div class="wishlist-item">
+        <div class="item-info">
+            <h3>Happy Tails Grooming</h3>
+            <p>Professional dog grooming & spa services</p>
+            <p>📍 Austin, TX</p>
+            <div class="tags">
+                <span class="tag">Grooming</span>
+                <span class="tag">Spa</span>
+            </div>
+        </div>
+        <div class="actions">
+            <button class="view-btn">View</button>
+            <button class="remove-btn">Remove</button>
+        </div>
+    </div>
+
+    <!-- Wishlist Item 2 -->
+    <div class="wishlist-item">
+        <div class="item-info">
+            <h3>Paws & Play Boarding</h3>
+            <p>Overnight pet boarding with play areas</p>
+            <p>📍 Dallas, TX</p>
+            <div class="tags">
+                <span class="tag">Boarding</span>
+                <span class="tag">Daycare</span>
+            </div>
+        </div>
+        <div class="actions">
+            <button class="view-btn">View</button>
+            <button class="remove-btn">Remove</button>
+        </div>
+    </div>
+
+    <!-- Wishlist Item 3 -->
+    <div class="wishlist-item">
+        <div class="item-info">
+            <h3>VetCare Animal Clinic</h3>
+            <p>Full-service veterinary clinic</p>
+            <p>📍 Houston, TX</p>
+            <div class="tags">
+                <span class="tag">Veterinary</span>
+                <span class="tag">Emergency</span>
+            </div>
+        </div>
+        <div class="actions">
+            <button class="view-btn">View</button>
+            <button class="remove-btn">Remove</button>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

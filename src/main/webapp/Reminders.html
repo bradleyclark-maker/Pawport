@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>PawPort Reminders</title>
+    <script src="RemindersAPI.js" defer></script>
+
+    <style>
+        body {
+            font-family: Arial;
+            margin: 40px;
+            background: #f5f5f5;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        input, button {
+            padding: 10px;
+            margin: 5px;
+        }
+
+        .reminder {
+            background: white;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .completed {
+            text-decoration: line-through;
+            color: gray;
+        }
+
+        button {
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .add-btn {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .delete-btn {
+            background: red;
+            color: white;
+        }
+
+        .done-btn {
+            background: blue;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>🐾 PawPort Reminder System</h1>
+
+<input type="text" id="title" placeholder="Enter reminder">
+<button class="add-btn" onclick="addReminder()">Add Reminder</button>
+
+<h2>Reminders:</h2>
+<div id="list"></div>
+
+</body>
+</html>

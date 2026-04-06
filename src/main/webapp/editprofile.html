@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="editprofile.js" defer></script>
+</head>
+<body>
+    <form action="/pawport/editprofile" method="post" enctype="multipart/form-data">
+
+        <input type="hidden" name="removePhoto" id="removePhoto-value" value="false">
+        <input type="hidden" name="serviceType" id="serviceType-value">
+        <input type="hidden" name="contactInfo" id="contactInfo-value">
+        <input type="hidden" name="hours" id="hours-value">
+
+        <!-- Name Section -->
+        <div class="field" id="name">
+            <label>Name</label>
+            <div class="field-content">
+                <input type="text" name="name" id="name-edit" placeholder="Enter Name of Organization">
+            </div>
+        </div>
+
+        <!-- Profile Photo Section -->
+        <div class="field" id="photo">
+            <label>Profile Photo / Logo</label>
+            <div class="field-content">
+                <img id="profile-img" src="" alt="" style="display:none; max-width:200px;">
+                <input type="file" id="photo-upload" name="photo" accept="image/*">
+                <button type="button" id="remove-photo" style="display:none;">Remove</button>
+            </div>
+        </div>
+
+        <!-- Description Section -->
+        <div class="field" id="description">
+            <label>Description</label>
+            <div class="field-content">
+                <textarea name="description" id="description-edit" placeholder="Short description of business"></textarea>
+            </div>
+        </div>
+
+        <!-- Type of Service Section -->
+        <div class="field" id="type">
+            <label>Service Type</label>
+            <div class="tags">
+                <span class="tag">Animal Shelter</span>
+                <span class="tag">Supply Store</span>
+                <span class="tag">Park</span>
+                <span class="tag">Hotel</span>
+            </div>
+        </div>
+
+        <!-- Contact Info Section -->
+        <div class="field" id="contact">
+            <input type="checkbox" class="toggle" checked>
+            <label>Contact Info</label>
+            <div class="field-content">
+                <div id="contact-list"></div>
+                <button type="button" id="add-contact">+ Add Contact</button>
+            </div>
+        </div>
+
+        <!-- Hours of Operation Section -->
+        <div class="field" id="hours">
+            <input type="checkbox" class="toggle" checked>
+            <label>Hours of Operation</label>
+            <div class="field-content" id="hours-content"></div>
+        </div>
+
+        <!-- Location Section -->
+        <div class="field" id="location">
+            <input type="checkbox" class="toggle" checked>
+            <label>Location</label>
+            <div class="field-content">
+                <input type="text" name="location" id="location-edit" placeholder="Enter address">
+            </div>
+        </div>
+
+        <button type="submit">Save</button>
+        <button type="button" onclick="window.location.href='viewprofile.html'">Cancel</button>
+
+    </form>
+</body>
+</html>
