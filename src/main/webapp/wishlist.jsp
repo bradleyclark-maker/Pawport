@@ -22,7 +22,7 @@
         }
     } else {
 %>
-    <li>No items in wishlist</li>
+    <li>No items in the wishlist</li>
 <%
     }
 %>

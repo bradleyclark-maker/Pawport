@@ -17,8 +17,8 @@ public class WishlistServlet extends HttpServlet {
     // 🔌 Database connection helper
     private Connection getConnection() throws SQLException {
         String url = "jdbc:mysql://ec2-3-133-83-59.us-east-2.compute.amazonaws.com:3306/pawportDB";
-        String user = "whobson";
-        String password = "pass1234";
+        String user = "username";
+        String password = "password";
 
         return DriverManager.getConnection(url, user, password);
     }
