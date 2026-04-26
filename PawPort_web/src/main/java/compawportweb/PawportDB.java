@@ -1,0 +1,24 @@
+package compawportweb;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class PawportDB {
+    // 1. Database Credentials
+    private static final String URL = "jdbc:mysql://ec2-3-133-83-59.us-east-2.compute.amazonaws.com/pawportDB"; 
+    private static final String USER = "bclark_remote"; // Your MySQL user name
+    private static final String PASS = "PawPortUser1"; // Your MySQL password
+
+    // 2. The Handshake Method
+    public static Connection getConnection() {
+        try {
+            // This loads the MySQL driver
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            return DriverManager.getConnection(URL, USER, PASS);
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println("Connection Failed! Check your driver or credentials.");
+            e.printStackTrace();
+            return null;
+        }
+    }
+}

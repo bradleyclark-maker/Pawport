@@ -1,0 +1,64 @@
+package compawportweb;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
+// Change these to javax.servlet if you are on an older version of Tomcat
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+@WebServlet("/RegisterServlet")
+public class RegisterServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
+        // 1. Grab data from the JSP input names
+        String fname = request.getParameter("regfname");
+        String lname = request.getParameter("reglname");
+        String phone = request.getParameter("regPhone");
+        String email = request.getParameter("regEmail");
+        String pass = request.getParameter("regPassword");
+        String confirmPass = request.getParameter("confirmPassword");
+
+        // 2. Simple Validation
+        if (pass == null || !pass.equals(confirmPass)) {
+            response.sendRedirect("register.jsp?error=PasswordMismatch");
+            return;
+        }
+
+        // 3. Database Handshake
+        try (Connection conn = PawportDB.getConnection()) {
+            if (conn != null) {
+                String sql = "INSERT INTO users (first_name, last_name, EMAIL, PHONE, password) VALUES (?, ?, ?, ?, ?)";
+                
+                try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                    pstmt.setString(1, fname);
+                    pstmt.setString(2, lname);
+                    pstmt.setString(3, email);
+                    pstmt.setString(4, phone);
+                    pstmt.setString(5, pass);
+                    
+                    int result = pstmt.executeUpdate(); // Runs the INSERT once
+                    
+                    if (result > 0) {
+                        response.sendRedirect("login.jsp?success=AccountCreated");
+                       // return; // Stop the servlet here
+                    } else {
+                        response.sendRedirect("register.jsp?error=CreationFailed");
+                       // return;
+                    }
+                }
+            } else {
+                response.sendRedirect("register.jsp?error=DbConnectionFailed");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendRedirect("register.jsp?error=DbError");
+        }
+    }
+}

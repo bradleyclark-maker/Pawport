@@ -1,0 +1,86 @@
+0:35:00 Tab1 RenderProcessGone
+0:35:00 Microsoft.UnloadController.ClearUnloadState
+0:35:00 Microsoft.Shutdown.TabStripModel.RunUnloadListenerBeforeClosing_false
+0:35:00 Microsoft.Shutdown.TabStripModel.InternalCloseTabsImpl_ClosedAll
+0:35:00 Microsoft.Shutdown.TabStripModel.SendDetachWebContentsNotifications
+0:35:00 Microsoft.UnloadController.ClearUnloadState
+0:35:00 Browser1 Close Tab1 at 0
+0:35:00 Tab1 WebContentsDestroyed
+0:35:00 Microsoft.UnloadController.TabStripEmpty
+0:35:00 Microsoft.UnloadController.IsUnclosableApp_IsNotWebApp
+0:35:00 Microsoft.UnloadController.HasCompletedUnloadProcessing_True
+0:35:00 Microsoft.Shutdown.OnWindowClosing
+0:35:00 Microsoft.UnloadController.IsUnclosableApp_IsNotWebApp
+0:35:00 Microsoft.UnloadController.HasCompletedUnloadProcessing_True
+0:35:00 Microsoft.Shutdown.OnWindowClosing_MaybeClearBrowsingDataOnExit
+0:35:00 Microsoft.Shutdown.OnWindowClosing_ClearBrowsingDataOnExitNotInProgress
+0:35:00 Microsoft.Shutdown.OnWindowClosingPostClearBrowsingData_NoBrowsingDataCleared
+0:35:00 Widget Closed: BrowserWidget
+0:35:00 Microsoft.UnloadController.HasCompletedUnloadProcessing_True
+0:35:00 Microsoft.Shutdown.OnWindowClosing
+0:35:00 Microsoft.Shutdown.OnWindowClosing_DeleteScheduled
+0:35:00 Microsoft.Last_Browser_Removed
+0:35:00 Microsoft.Shutdown.ShutdownIfNoBrowsers
+0:35:00 Microsoft.Shutdown.SetTryingToQuit_Quitting
+0:35:00 Microsoft.Shutdown.NotifyAppTerminating
+0:35:00 Microsoft.Shutdown.OnAppExiting
+0:35:00 Microsoft.Shutdown.HandleAppExitingForPlatform_Aura
+0:35:00 Microsoft.Shutdown.HandleAppExitingForPlatform_Aura.NotificationUIManager_StartShutdown
+0:35:00 Microsoft.Shutdown.HandleAppExitingForPlatform_Aura.CloseAllSecondaryWidgets
+0:35:00 Shutdown
+0:00:00 Startup
+0:00:00 Microsoft.DeleteProfileHelper.CleanUpEphemeralProfiles
+0:00:00 Microsoft.DeleteProfileHelper.CleanUpDeletedProfiles
+0:00:00 Microsoft.NewBrowser_Popup
+0:00:00 Microsoft.BrowserList.AddBrowser
+0:00:00 Browser1 Insert active Tab1 at 0
+0:00:00 Tab1 StartNav1 #auto_toplevel
+0:00:00 Tab1 StartNav2 #typed
+0:00:00 Tab1 FinishNav1
+0:00:00 Tab1 PageLoad
+0:00:00 Tab1 FinishNav2
+0:00:04 Tab1 PageLoad
+0:05:25 Memory Pressure: Critical
+0:05:30 Memory Pressure: Critical
+0:05:35 Memory Pressure: None
+0:05:40 Memory Pressure: Moderate
+0:05:45 Memory Pressure: Critical
+0:05:50 Memory Pressure: None
+0:05:55 Memory Pressure: Moderate
+0:06:00 Memory Pressure: Critical
+0:06:05 Memory Pressure: None
+0:19:56 Memory Pressure: Critical
+0:20:01 Memory Pressure: Critical
+0:20:06 Memory Pressure: Critical
+0:20:11 Memory Pressure: None
+0:20:16 Memory Pressure: Critical
+0:20:21 Memory Pressure: Critical
+0:20:26 Memory Pressure: None
+0:20:31 Memory Pressure: Critical
+0:20:36 Memory Pressure: None
+0:30:42 Memory Pressure: Moderate
+0:30:47 Memory Pressure: None
+0:30:52 Memory Pressure: Critical
+0:30:57 Memory Pressure: Critical
+0:31:02 Memory Pressure: None
+0:31:07 Memory Pressure: Critical
+0:31:12 Memory Pressure: None
+0:41:18 Memory Pressure: Moderate
+0:41:28 Memory Pressure: None
+0:41:33 Memory Pressure: Critical
+0:41:38 Memory Pressure: None
+0:41:43 Memory Pressure: Critical
+0:41:48 Memory Pressure: None
+0:51:59 Memory Pressure: Moderate
+0:52:09 Memory Pressure: Critical
+0:52:14 Memory Pressure: None
+0:52:19 Memory Pressure: Critical
+0:52:24 Memory Pressure: None
+1:03:59 Memory Pressure: Critical
+1:04:04 Memory Pressure: None
+1:04:09 Memory Pressure: Critical
+1:04:14 Memory Pressure: Critical
+1:04:19 Memory Pressure: None
+1:04:24 Memory Pressure: Critical
+1:04:29 Memory Pressure: None
+4:21:37 Microsoft.UnloadController.IsUnclosableApp_IsNotWebApp
