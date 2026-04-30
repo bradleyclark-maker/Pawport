@@ -14,7 +14,6 @@ public class WishlistServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    // 🔌 Database connection helper
     private Connection getConnection() throws SQLException {
         String url = "jdbc:mysql://ec2-3-133-83-59.us-east-2.compute.amazonaws.com:3306/pawportDB";
         String user = "username";
@@ -23,7 +22,6 @@ public class WishlistServlet extends HttpServlet {
         return DriverManager.getConnection(url, user, password);
     }
 
-    // 📥 Load wishlist page
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -38,10 +36,17 @@ public class WishlistServlet extends HttpServlet {
         List<WishlistItem> wishlist = fetchWishlist(userId);
 
         request.setAttribute("wishlist", wishlist);
+
+        // Optional debug message
+        String message = (String) request.getSession().getAttribute("message");
+        if (message != null) {
+            request.setAttribute("message", message);
+            request.getSession().removeAttribute("message");
+        }
+
         request.getRequestDispatcher("wishlist.jsp").forward(request, response);
     }
 
-    // 📤 Handle add/remove
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -64,14 +69,17 @@ public class WishlistServlet extends HttpServlet {
         response.sendRedirect("wishlist");
     }
 
-    // 🔑 Get user ID from session
     private Integer getUserID(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        if (session == null) return null;
+        HttpSession session = request.getSession();
+
+        // TEMP: force user for testing
+        if (session.getAttribute("userId") == null) {
+            session.setAttribute("userId", 1);
+        }
+
         return (Integer) session.getAttribute("userId");
     }
 
-    // 📚 Fetch wishlist using JOIN
     private List<WishlistItem> fetchWishlist(int userId) {
         List<WishlistItem> items = new ArrayList<>();
 
@@ -102,28 +110,41 @@ public class WishlistServlet extends HttpServlet {
         return items;
     }
 
-    // ➕ Add item using item_id
+    // ✅ Add using item NAME → converts to item_id
     private void addItem(HttpServletRequest request, int userId) {
-        try {
-            int itemId = Integer.parseInt(request.getParameter("itemId"));
+        String itemName = request.getParameter("itemName");
 
-            String sql = "INSERT INTO wishlist (user_id, item_id) VALUES (?, ?)";
+        if (itemName == null || itemName.trim().isEmpty()) return;
 
-            try (Connection conn = getConnection();
-                 PreparedStatement ps = conn.prepareStatement(sql)) {
+        String findSql = "SELECT id FROM items WHERE LOWER(item_name) = LOWER(?)";
+        String insertSql = "INSERT INTO wishlist (user_id, item_id) VALUES (?, ?)";
 
-                ps.setInt(1, userId);
-                ps.setInt(2, itemId);
+        try (Connection conn = getConnection();
+             PreparedStatement findStmt = conn.prepareStatement(findSql)) {
 
-                ps.executeUpdate();
+            findStmt.setString(1, itemName.trim());
+            ResultSet rs = findStmt.executeQuery();
+
+            if (rs.next()) {
+                int itemId = rs.getInt("id");
+
+                try (PreparedStatement insertStmt = conn.prepareStatement(insertSql)) {
+                    insertStmt.setInt(1, userId);
+                    insertStmt.setInt(2, itemId);
+                    insertStmt.executeUpdate();
+
+                    request.getSession().setAttribute("message", "Item added!");
+                }
+
+            } else {
+                request.getSession().setAttribute("message", "Item not found.");
             }
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    // ➖ Remove item using item_id
     private void removeItem(HttpServletRequest request, int userId) {
         try {
             int itemId = Integer.parseInt(request.getParameter("itemId"));
@@ -135,8 +156,9 @@ public class WishlistServlet extends HttpServlet {
 
                 ps.setInt(1, userId);
                 ps.setInt(2, itemId);
-
                 ps.executeUpdate();
+
+                request.getSession().setAttribute("message", "Item removed!");
             }
 
         } catch (Exception e) {
