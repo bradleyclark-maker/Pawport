@@ -14,7 +14,7 @@ public class ProfilesServlet extends HttpServlet {
 	// update this
 	private static final String DB_URL  = "jdbc:mysql://ec2-3-133-83-59.us-east-2.compute.amazonaws.com/pawportDB";
 	private static final String DB_USER = "bclark_remote";
-	private static final String DB_PASS = "PawPortUser1"; 
+	private static final String DB_PASS = "password"; //put pass here
 
     // create table profiles (
     //     profile_id   int primary key auto_incement,
