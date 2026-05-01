@@ -34,7 +34,7 @@ public class RegisterServlet extends HttpServlet {
         // 3. Database Handshake
         try (Connection conn = PawportDB.getConnection()) {
             if (conn != null) {
-                String sql = "INSERT INTO myTable (first_name, last_name, EMAIL, PHONE, password) VALUES (?, ?, ?, ?, ?)";
+                String sql = "INSERT INTO users (first_name, last_name, EMAIL, PHONE, password) VALUES (?, ?, ?, ?, ?)";
                 
                 try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
                     pstmt.setString(1, fname);
@@ -46,11 +46,11 @@ public class RegisterServlet extends HttpServlet {
                     int result = pstmt.executeUpdate(); // Runs the INSERT once
                     
                     if (result > 0) {
-                        // SUCCESS: Send them to the login page
                         response.sendRedirect("login.jsp?success=AccountCreated");
+                        return; // Stop the servlet here
                     } else {
-                        // FAILURE: Stay on register page
                         response.sendRedirect("register.jsp?error=CreationFailed");
+                        return;
                     }
                 }
             } else {
@@ -58,7 +58,7 @@ public class RegisterServlet extends HttpServlet {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            response.sendRedirect("register.jsp?error=DbError");
+            response.sendRedirect("register.jsp?error=DbError" + java.net.URLEncoder.encode(e.getMessage(), "UTF-8"));
         }
     }
 }

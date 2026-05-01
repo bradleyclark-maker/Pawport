@@ -12,9 +12,9 @@ import java.sql.*;
 public class ProfilesServlet extends HttpServlet {
 
 	// update this
-    private static final String DB_URL  = "jdbc:mysql://localhost:3306/testDB";
-    private static final String DB_USER = "whobson_remote";
-    private static final String DB_PASS = "your password"; 
+	private static final String DB_URL  = "jdbc:mysql://ec2-3-133-83-59.us-east-2.compute.amazonaws.com/pawportDB";
+	private static final String DB_USER = "bclark_remote";
+	private static final String DB_PASS = "PawPortUser1"; 
 
     // create table profiles (
     //     profile_id   int primary key auto_incement,
@@ -292,15 +292,13 @@ public class ProfilesServlet extends HttpServlet {
 
     private int getLoggedInUserId(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
-    	return 1;
-    	/*
         HttpSession session = req.getSession(false);
-        if (session == null || session.getAttribute("userId") == null) {
+        if (session == null || session.getAttribute("userEmail") == null) {
             resp.sendRedirect(req.getContextPath() + "/login");
             return -1;
         }
-        return (int) session.getAttribute("userId");
-        */
+        String email = (String) session.getAttribute("userEmail");
+        return DatabaseUtility.getUserIdByEmail(email);
     }
 
     private String sanitize(String value) {

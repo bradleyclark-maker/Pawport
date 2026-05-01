@@ -1,8 +1,8 @@
 const params = new URLSearchParams(window.location.search);
 const userId = params.get('userId');
 const url = userId 
-    ? `/pawport/editprofile?format=json&userId=${userId}` 
-    : '/pawport/editprofile?format=json';
+    ? `editprofile?format=json&userId=${userId}` 
+    : 'editprofile?format=json';
 
 fetch(url)
     .then(res => res.json())
@@ -21,8 +21,8 @@ fetch(url)
         if (data.hasPhoto) {
             const img = document.getElementById('profile-img');
             img.src = userId 
-                ? `/pawport/editprofile/photo?userId=${userId}` 
-                : '/pawport/editprofile/photo';
+                ? `editprofile/photo?userId=${userId}` 
+                : 'editprofile/photo';
             img.style.display = 'block';
             document.getElementById('photo-placeholder').style.display = 'none';
         }

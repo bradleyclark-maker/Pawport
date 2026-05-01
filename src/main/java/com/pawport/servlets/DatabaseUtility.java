@@ -1,4 +1,4 @@
-package compawportweb;
+package com.pawport.servlets;
 
 import java.sql.*;
 
@@ -29,5 +29,21 @@ public class DatabaseUtility {
             e.printStackTrace();
         }
         return status;
+    }
+    
+    public static int getUserIdByEmail(String email) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection conn = DriverManager.getConnection(URL, USER, PASS);
+            String sql = "SELECT user_id FROM users WHERE email = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) return rs.getInt("user_id");
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 }

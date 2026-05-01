@@ -1,4 +1,4 @@
-
+package com.pawport.servlets;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import compawportweb.S3Service;
+import com.pawport.servlets.S3Service;
 import jakarta.servlet.annotation.MultipartConfig;
 
 /**

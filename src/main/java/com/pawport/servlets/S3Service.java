@@ -1,8 +1,8 @@
-package compawportweb;
+package com.pawport.servlets;
 
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
-import compawportweb.awsconfig.AwsConfig;
+import com.pawport.servlets.awsconfig.AwsConfig;
 import software.amazon.awssdk.services.s3.model.ListObjectsRequest;
 import software.amazon.awssdk.services.s3.model.ListObjectsResponse;
 import software.amazon.awssdk.services.s3.model.S3Object;

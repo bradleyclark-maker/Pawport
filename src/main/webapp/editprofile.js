@@ -120,7 +120,7 @@ document.querySelector('form').addEventListener('submit', function () {
 });
 
 // Load saved profile data into fields on page load
-fetch('/pawport/editprofile?format=json')
+fetch('editprofile?format=json')
     .then(res => res.json())
     .then(data => {
         // Text fields
@@ -130,7 +130,7 @@ fetch('/pawport/editprofile?format=json')
 
         // Photo
         if (data.hasPhoto) {
-            profileImg.src = '/pawport/editprofile/photo';
+            profileImg.src = 'editprofile/photo';
             profileImg.style.display = 'block';
             removePhotoBtn.style.display = 'inline';
         }

@@ -5,9 +5,9 @@ import java.sql.SQLException;
 
 public class PawportDB {
     // 1. Database Credentials
-    private static final String URL = "jdbc:mysql://ec2-18-222-195-123.us-east-2.compute.amazonaws.com/pawportDB"; 
+    private static final String URL = "jdbc:mysql://ec2-3-133-83-59.us-east-2.compute.amazonaws.com/pawportDB"; 
     private static final String USER = "bclark_remote"; // Your MySQL user name
-    private static final String PASS = "your password"; // Your MySQL password
+    private static final String PASS = "PawPortUser1"; // Your MySQL password
 
     // 2. The Handshake Method
     public static Connection getConnection() {

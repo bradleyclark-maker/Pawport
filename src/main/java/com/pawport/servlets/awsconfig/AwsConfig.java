@@ -1,4 +1,4 @@
-package compawportweb.awsconfig;
+package com.pawport.servlets.awsconfig;
 
 public class AwsConfig {
     public static final String REGION = "us-east-2";

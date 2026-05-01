@@ -1,6 +1,7 @@
-package com.pawport;
+package com.pawport.servlets;
 
 public class WishlistItem {
+	//comment so I can recommit
     private int itemId;
     private String itemName;
     private String itemType;
