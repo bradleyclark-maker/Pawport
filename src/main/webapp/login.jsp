@@ -103,7 +103,7 @@
     }
 %>
             
-            <form action="LoginServlet" method="POST">
+            <form action="login" method="POST">
                 <table>
                     <tr>
                         <td style="text-align: left;">Email</td>

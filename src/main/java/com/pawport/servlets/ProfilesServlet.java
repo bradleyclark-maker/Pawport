@@ -11,26 +11,9 @@ import java.sql.*;
 @MultipartConfig(maxFileSize = 5 * 1024 * 1024)   // 5 MB photo limit
 public class ProfilesServlet extends HttpServlet {
 
-	// update this
 	private static final String DB_URL  = "jdbc:mysql://ec2-3-133-83-59.us-east-2.compute.amazonaws.com/pawportDB";
 	private static final String DB_USER = "bclark_remote";
-	private static final String DB_PASS = "password"; //put pass here
-
-    // create table profiles (
-    //     profile_id   int primary key auto_incement,
-    //     user_id      int not null,
-    //     name         varchar(255),
-    //     description  text,
-    //     service_type varchar(50),
-    //     contact_info text,
-    //     hours        text,
-    //     location     varchar(100),
-    //     status       varchar(50) DEFAULT 'pending',
-    //     photo        longblob,
-    //     photo_type   varchar(50),
-    //	   updated_at   timestamp default current_timestamp on update current_timestamp,
-    //     foreign key (user_id) references users(user_id)
-    // );
+	private static final String DB_PASS = "password"; // your pass here
 
     private Connection getConnection() throws SQLException {
         try {
@@ -45,9 +28,7 @@ public class ProfilesServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        // Determine which user's profile to load:
-        // If a userId param is in the URL (e.g. from search results), use that.
-        // Otherwise load the logged in user's own profile.
+        // Determine which user's profile to load
         int userId;
         String userIdParam = req.getParameter("userId");
         if (userIdParam != null) {
@@ -104,7 +85,7 @@ public class ProfilesServlet extends HttpServlet {
             return;
         }
 
-        // If JSON format requested (used by viewprofile.js and editprofile.js), return JSON
+        // If JSON format requested, return JSON
         if ("json".equals(req.getParameter("format"))) {
             resp.setContentType("application/json");
             resp.setCharacterEncoding("UTF-8");
@@ -124,7 +105,7 @@ public class ProfilesServlet extends HttpServlet {
             return;
         }
 
-        // Otherwise set attributes and forward to edit page
+        // Otherwise forward to edit page
         req.setAttribute("profileName", profileName);
         req.setAttribute("description", description);
         req.setAttribute("serviceType", serviceType);
@@ -293,12 +274,29 @@ public class ProfilesServlet extends HttpServlet {
     private int getLoggedInUserId(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
         HttpSession session = req.getSession(false);
-        if (session == null || session.getAttribute("userEmail") == null) {
+        if (session == null) {
             resp.sendRedirect(req.getContextPath() + "/login");
             return -1;
         }
+
+        // Use userId directly from session if available (set by LoginServlet)
+        if (session.getAttribute("userId") != null) {
+            return (Integer) session.getAttribute("userId");
+        }
+
+        // Fall back to email lookup for old sessions created before the fix
         String email = (String) session.getAttribute("userEmail");
-        return DatabaseUtility.getUserIdByEmail(email);
+        if (email == null) {
+            resp.sendRedirect(req.getContextPath() + "/login");
+            return -1;
+        }
+        int id = DatabaseUtility.getUserIdByEmail(email);
+        if (id < 0) {
+            resp.sendRedirect(req.getContextPath() + "/login");
+            return -1;
+        }
+        session.setAttribute("userId", id); // cache it for next time
+        return id;
     }
 
     private String sanitize(String value) {

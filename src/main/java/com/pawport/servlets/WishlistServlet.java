@@ -9,7 +9,9 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 
+/*
 @WebServlet("/wishlist")
+*/
 public class WishlistServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -69,6 +71,7 @@ public class WishlistServlet extends HttpServlet {
         response.sendRedirect("wishlist");
     }
 
+    /*
     private Integer getUserID(HttpServletRequest request) {
         HttpSession session = request.getSession();
 
@@ -79,11 +82,30 @@ public class WishlistServlet extends HttpServlet {
 
         return (Integer) session.getAttribute("userId");
     }
+    */
+    
+    private Integer getUserID(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session == null) return null;
+
+        // Use userId directly if already in session
+        if (session.getAttribute("userId") != null) {
+            return (Integer) session.getAttribute("userId");
+        }
+
+        // Fall back to looking up by email (in case of old sessions)
+        String email = (String) session.getAttribute("userEmail");
+        if (email == null) return null;
+        int id = DatabaseUtility.getUserIdByEmail(email);
+        if (id < 0) return null;
+        session.setAttribute("userId", id); // cache it for next time
+        return id;
+    }
 
     private List<WishlistItem> fetchWishlist(int userId) {
         List<WishlistItem> items = new ArrayList<>();
 
-        String sql = "SELECT i.id, i.item_name, i.item_type, i.location " +
+        String sql = "SELECT i.id, i.item_name, i.item_type, i.item_location " +
                      "FROM wishlist w " +
                      "JOIN items i ON w.item_id = i.id " +
                      "WHERE w.user_id = ?";
@@ -99,7 +121,7 @@ public class WishlistServlet extends HttpServlet {
                         rs.getInt("id"),
                         rs.getString("item_name"),
                         rs.getString("item_type"),
-                        rs.getString("location")
+                        rs.getString("item_location")
                 ));
             }
 
@@ -166,3 +188,4 @@ public class WishlistServlet extends HttpServlet {
         }
     }
 }
+

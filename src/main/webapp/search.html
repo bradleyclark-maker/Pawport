@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PawPort Search</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f6f8fb;
+      color: #1f2937;
+    }
+
+    .site-header {
+      background: white;
+      border-bottom: 1px solid #dbe4f0;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .navbar {
+      width: min(1200px, 94%);
+      margin: 0 auto;
+      padding: 14px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #2563eb;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #1f2937;
+      background: #f3f4f6;
+      border: 1px solid #dbe4f0;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-weight: 600;
+    }
+
+    .nav-links a:hover {
+      background: #eff6ff;
+      color: #2563eb;
+    }
+
+    .nav-links .login-btn {
+      background: #2563eb;
+      color: white;
+      border-color: #2563eb;
+    }
+
+    .banner {
+      background: linear-gradient(135deg, #eaf4ff, #ffffff);
+      padding: 60px 20px;
+      text-align: center;
+      border-bottom: 1px solid #dbe4f0;
+    }
+
+    .banner h1 {
+      margin: 0 0 10px;
+      font-size: 2.7rem;
+      color: #0f2f75;
+    }
+
+    .banner p {
+      margin: 0;
+      color: #4b5563;
+      font-size: 1.1rem;
+    }
+
+    .container {
+      width: min(1100px, 92%);
+      margin: 0 auto;
+      padding: 32px 0 48px;
+    }
+
+    .hero {
+      background: white;
+      border: 1px solid #dbe4f0;
+      border-radius: 18px;
+      padding: 28px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+      margin-bottom: 24px;
+    }
+
+    .hero h2 {
+      margin: 0 0 10px;
+      font-size: 2rem;
+    }
+
+    .hero p {
+      margin: 0;
+      color: #4b5563;
+      line-height: 1.6;
+    }
+
+    .search-panel {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1fr auto;
+      gap: 12px;
+    }
+
+    input, select, button {
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px solid #cfd8e3;
+      font-size: 1rem;
+    }
+
+    button {
+      background: #2563eb;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+    }
+
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 18px 0 16px;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .result-count {
+      font-weight: 700;
+      color: #374151;
+    }
+
+    .clear-btn {
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+    .clear-btn:hover {
+      background: #d1d5db;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid #dbe4f0;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-image {
+      height: 150px;
+      background: linear-gradient(135deg, #dbeafe, #fce7f3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+    }
+
+    .card-body {
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1;
+    }
+
+    .badge {
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      width: fit-content;
+    }
+
+    .location {
+      color: #6b7280;
+    }
+
+    .description {
+      color: #4b5563;
+      line-height: 1.5;
+      flex: 1;
+    }
+
+    .price {
+      font-weight: 700;
+      color: #111827;
+    }
+
+    .empty-state {
+      display: none;
+      text-align: center;
+      background: white;
+      border: 1px dashed #cbd5e1;
+      border-radius: 16px;
+      padding: 40px 20px;
+      color: #4b5563;
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      color: #6b7280;
+      font-size: 0.93rem;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 100;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      padding: 24px;
+    }
+
+    .modal-content {
+      background: white;
+      width: min(650px, 95%);
+      margin: 70px auto;
+      border-radius: 18px;
+      padding: 26px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+      position: relative;
+    }
+
+    .close-btn {
+      position: absolute;
+      right: 18px;
+      top: 14px;
+      font-size: 1.6rem;
+      cursor: pointer;
+      color: #6b7280;
+    }
+
+    .profile-info {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .profile-info div {
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      padding: 12px;
+      border-radius: 12px;
+    }
+
+    @media (max-width: 850px) {
+      .search-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .banner h1 {
+        font-size: 2.1rem;
+      }
+
+      .navbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <nav class="navbar">
+      <div class="logo">🐾 PawPort</div>
+
+      <div class="nav-links">
+        <a href="login" class="login-btn">Login</a>
+        <a href="register.jsp">Register</a>
+        <a href="viewprofile.html">Profile</a>
+        <a href="wishlist">Wishlist</a>
+        <a href="Reminders.html">Reminders</a>
+        <a href="documentVault.jsp">Vault</a>
+      </div>
+    </nav>
+  </header>
+
+  <section class="banner">
+    <h1>Find the Best Care for Your Pet</h1>
+    <p>Search trusted pet services, products, records, and resources all in one place.</p>
+  </section>
+
+  <div class="container">
+    <section class="hero">
+      <h2>PawPort Search</h2>
+      <p>Search pet services, products, and organizations by keyword, category, or location.</p>
+
+      <div class="search-panel">
+        <input type="text" id="searchInput" placeholder="Search for grooming, vet, dog food, rescue, Texarkana..." />
+
+        <select id="categoryFilter">
+          <option value="all">All Categories</option>
+          <option value="Grooming">Grooming</option>
+          <option value="Veterinary">Veterinary</option>
+          <option value="Boarding">Boarding</option>
+          <option value="Rescue">Rescue</option>
+          <option value="Supplies">Supplies</option>
+          <option value="Training">Training</option>
+        </select>
+
+        <select id="locationFilter">
+          <option value="all">All Locations</option>
+          <option value="Texarkana">Texarkana</option>
+          <option value="Atlanta">Atlanta</option>
+          <option value="New Boston">New Boston</option>
+          <option value="Nash">Nash</option>
+        </select>
+
+        <button id="searchButton">Search</button>
+      </div>
+    </section>
+
+    <div class="toolbar">
+      <div class="result-count" id="resultCount">Showing 8 results</div>
+      <button class="clear-btn" id="clearButton">Clear Filters</button>
+    </div>
+
+    <div class="grid" id="resultsGrid"></div>
+
+    <div class="empty-state" id="emptyState">
+      <h2>No results found</h2>
+      <p>Try a different keyword, category, or location.</p>
+    </div>
+
+    <p class="footer-note">
+      Browse pet-related services, products, and local organizations in one place.
+    </p>
+  </div>
+
+  <div class="modal" id="profileModal">
+    <div class="modal-content">
+      <span class="close-btn" id="closeModal">&times;</span>
+      <h2 id="modalName"></h2>
+      <p id="modalDescription"></p>
+
+      <div class="profile-info">
+        <div><strong>Category:</strong> <span id="modalCategory"></span></div>
+        <div><strong>Location:</strong> <span id="modalLocation"></span></div>
+        <div><strong>Address:</strong> <span id="modalAddress"></span></div>
+        <div><strong>Email:</strong> <span id="modalEmail"></span></div>
+        <div><strong>Hours:</strong> <span id="modalHours"></span></div>
+        <div><strong>Phone:</strong> <span id="modalPhone"></span></div>
+        <div><strong>Price:</strong> <span id="modalPrice"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const listings = [
+      {
+        name: "Happy Tails Grooming",
+        category: "Grooming",
+        location: "Texarkana",
+        address: "123 Paw Lane, Texarkana, TX 75501",
+        email: "contact@happytailsgrooming.com",
+        price: "$35+",
+        emoji: "✂️",
+        hours: "Mon - Fri: 8:00 AM - 5:00 PM",
+        phone: "(903) 555-0142",
+        description: "Full-service dog and cat grooming with baths, brushing, nail trimming, and seasonal care.",
+        keywords: ["grooming", "bath", "nails", "dog", "cat", "salon"]
+      },
+      {
+        name: "Red River Veterinary Clinic",
+        category: "Veterinary",
+        location: "Texarkana",
+        address: "450 Riverbend Drive, Texarkana, TX 75503",
+        email: "appointments@redrivervet.com",
+        price: "$60 visit",
+        emoji: "🩺",
+        hours: "Mon - Sat: 7:30 AM - 6:00 PM",
+        phone: "(903) 555-0198",
+        description: "General veterinary services, wellness exams, vaccinations, and checkups for pets of all ages.",
+        keywords: ["vet", "doctor", "vaccines", "wellness", "clinic", "pets"]
+      },
+      {
+        name: "Paws & Stay Boarding",
+        category: "Boarding",
+        location: "Nash",
+        address: "88 Kennel Creek Road, Nash, TX 75569",
+        email: "boarding@pawsandstay.com",
+        price: "$28/night",
+        emoji: "🏠",
+        hours: "Daily: 7:00 AM - 7:00 PM",
+        phone: "(903) 555-0184",
+        description: "Safe overnight boarding with feeding schedules, playtime, and climate-controlled sleeping spaces.",
+        keywords: ["boarding", "overnight", "kennel", "stay", "dog hotel"]
+      },
+      {
+        name: "Second Chance Pet Rescue",
+        category: "Rescue",
+        location: "Atlanta",
+        address: "214 Hope Street, Atlanta, TX 75551",
+        email: "adopt@secondchancepets.org",
+        price: "Adoption Fees Apply",
+        emoji: "🐾",
+        hours: "Tue - Sat: 10:00 AM - 4:00 PM",
+        phone: "(903) 555-0117",
+        description: "Local rescue organization helping abandoned and surrendered pets find safe, loving homes.",
+        keywords: ["rescue", "adoption", "shelter", "nonprofit", "dogs", "cats"]
+      },
+      {
+        name: "Bark Barn Supplies",
+        category: "Supplies",
+        location: "Texarkana",
+        address: "902 Waggon Road, Texarkana, TX 75501",
+        email: "sales@barkbarnsupplies.com",
+        price: "$10+",
+        emoji: "🦴",
+        hours: "Mon - Sun: 9:00 AM - 8:00 PM",
+        phone: "(903) 555-0166",
+        description: "Pet food, toys, treats, leashes, collars, and daily care essentials for dogs and cats.",
+        keywords: ["food", "toys", "treats", "supplies", "leash", "collar"]
+      },
+      {
+        name: "Sit, Stay, Learn Academy",
+        category: "Training",
+        location: "New Boston",
+        address: "61 Trainer Trail, New Boston, TX 75570",
+        email: "classes@sitstaylearn.com",
+        price: "$45/session",
+        emoji: "🎓",
+        hours: "Mon - Fri: 10:00 AM - 6:00 PM",
+        phone: "(903) 555-0173",
+        description: "Beginner and intermediate obedience training, behavioral support, and one-on-one sessions.",
+        keywords: ["training", "obedience", "behavior", "puppy", "lessons"]
+      },
+      {
+        name: "Whisker Wash Express",
+        category: "Grooming",
+        location: "Atlanta",
+        address: "309 Groomer Avenue, Atlanta, TX 75551",
+        email: "hello@whiskerwashexpress.com",
+        price: "$25+",
+        emoji: "🛁",
+        hours: "Wed - Sun: 9:00 AM - 5:00 PM",
+        phone: "(903) 555-0129",
+        description: "Quick pet wash and grooming services for busy owners who need affordable same-day appointments.",
+        keywords: ["wash", "grooming", "same day", "bath", "express"]
+      },
+      {
+        name: "Four Paws Wellness Center",
+        category: "Veterinary",
+        location: "Nash",
+        address: "740 Wellness Way, Nash, TX 75569",
+        email: "care@fourpawswellness.com",
+        price: "$75 visit",
+        emoji: "💊",
+        hours: "Mon - Fri: 8:00 AM - 6:00 PM",
+        phone: "(903) 555-0155",
+        description: "Pet health clinic offering exams, wellness plans, nutrition guidance, and preventive care.",
+        keywords: ["health", "vet", "wellness", "nutrition", "preventive"]
+      }
+    ];
+
+    const resultsGrid = document.getElementById("resultsGrid");
+    const searchInput = document.getElementById("searchInput");
+    const categoryFilter = document.getElementById("categoryFilter");
+    const locationFilter = document.getElementById("locationFilter");
+    const searchButton = document.getElementById("searchButton");
+    const clearButton = document.getElementById("clearButton");
+    const resultCount = document.getElementById("resultCount");
+    const emptyState = document.getElementById("emptyState");
+
+    const profileModal = document.getElementById("profileModal");
+    const closeModal = document.getElementById("closeModal");
+
+    function renderListings(items) {
+      resultsGrid.innerHTML = "";
+
+      if (items.length === 0) {
+        emptyState.style.display = "block";
+        resultsGrid.style.display = "none";
+        resultCount.textContent = "Showing 0 results";
+        return;
+      }
+
+      emptyState.style.display = "none";
+      resultsGrid.style.display = "grid";
+      resultCount.textContent = `Showing ${items.length} result${items.length === 1 ? "" : "s"}`;
+
+      items.forEach(item => {
+        const originalIndex = listings.indexOf(item);
+
+        const card = document.createElement("div");
+        card.className = "card";
+
+        card.innerHTML = `
+          <div class="card-image">${item.emoji}</div>
+          <div class="card-body">
+            <span class="badge">${item.category}</span>
+            <h3>${item.name}</h3>
+            <div class="location">${item.location}</div>
+            <div class="description">${item.description}</div>
+            <div class="price">${item.price}</div>
+            <button onclick="openProfile(${originalIndex})">View Profile</button>
+          </div>
+        `;
+
+        resultsGrid.appendChild(card);
+      });
+    }
+
+    function openProfile(index) {
+      const item = listings[index];
+
+      document.getElementById("modalName").textContent = item.name;
+      document.getElementById("modalDescription").textContent = item.description;
+      document.getElementById("modalCategory").textContent = item.category;
+      document.getElementById("modalLocation").textContent = item.location;
+      document.getElementById("modalAddress").textContent = item.address;
+      document.getElementById("modalEmail").textContent = item.email;
+      document.getElementById("modalHours").textContent = item.hours;
+      document.getElementById("modalPhone").textContent = item.phone;
+      document.getElementById("modalPrice").textContent = item.price;
+
+      profileModal.style.display = "block";
+    }
+
+    function closeProfile() {
+      profileModal.style.display = "none";
+    }
+
+    closeModal.addEventListener("click", closeProfile);
+
+    window.addEventListener("click", event => {
+      if (event.target === profileModal) {
+        closeProfile();
+      }
+    });
+
+    function applyFilters() {
+      const searchTerm = searchInput.value.trim().toLowerCase();
+      const selectedCategory = categoryFilter.value;
+      const selectedLocation = locationFilter.value;
+
+      const filtered = listings.filter(item => {
+        const matchesSearch =
+          searchTerm === "" ||
+          item.name.toLowerCase().includes(searchTerm) ||
+          item.category.toLowerCase().includes(searchTerm) ||
+          item.location.toLowerCase().includes(searchTerm) ||
+          item.address.toLowerCase().includes(searchTerm) ||
+          item.email.toLowerCase().includes(searchTerm) ||
+          item.description.toLowerCase().includes(searchTerm) ||
+          item.keywords.some(keyword => keyword.toLowerCase().includes(searchTerm));
+
+        const matchesCategory = selectedCategory === "all" || item.category === selectedCategory;
+        const matchesLocation = selectedLocation === "all" || item.location === selectedLocation;
+
+        return matchesSearch && matchesCategory && matchesLocation;
+      });
+
+      renderListings(filtered);
+    }
+
+    searchButton.addEventListener("click", applyFilters);
+    searchInput.addEventListener("input", applyFilters);
+    categoryFilter.addEventListener("change", applyFilters);
+    locationFilter.addEventListener("change", applyFilters);
+
+    clearButton.addEventListener("click", () => {
+      searchInput.value = "";
+      categoryFilter.value = "all";
+      locationFilter.value = "all";
+      renderListings(listings);
+    });
+
+    renderListings(listings);
+  </script>
+</body>
+</html>
+ubuntu@ip-172-31-36-95:~$ 

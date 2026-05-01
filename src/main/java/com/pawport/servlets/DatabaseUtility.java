@@ -3,11 +3,9 @@ package com.pawport.servlets;
 import java.sql.*;
 
 public class DatabaseUtility {
-    // You'll replace these with your actual AWS RDS credentials
-	private static final String URL = "jdbc:mysql://ec2-3-133-83-59.us-east-2.compute.amazonaws.com/pawportDB"; 
-    private static final String USER = "bclark_remote"; // Your MySQL user name
-    private static final String PASS = "password"; // Your MySQL password
-
+    private static final String URL = "jdbc:mysql://ec2-3-133-83-59.us-east-2.compute.amazonaws.com/pawportDB"; 
+    private static final String USER = "bclark_remote"; 
+    private static final String PASS = "password"; // your pass here
 
     public static boolean verifyUser(String email, String password) {
         boolean status = false;
@@ -16,7 +14,7 @@ public class DatabaseUtility {
             Connection conn = DriverManager.getConnection(URL, USER, PASS);
             
             // Use a Prepared Statement to prevent SQL Injection (Cybersecurity Best Practice)
-            String sql = "SELECT * FROM users WHERE email = ? AND password = ?";
+            String sql = "SELECT * FROM users WHERE EMAIL = ? AND password = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, email);
             ps.setString(2, password);
@@ -35,11 +33,11 @@ public class DatabaseUtility {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection(URL, USER, PASS);
-            String sql = "SELECT user_id FROM users WHERE email = ?";
+            String sql = "SELECT id FROM users WHERE EMAIL = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) return rs.getInt("user_id");
+            if (rs.next()) return rs.getInt("id");
             conn.close();
         } catch (Exception e) {
             e.printStackTrace();
