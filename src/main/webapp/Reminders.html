@@ -1,27 +1,99 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>PawPort Reminder System</title>
+<meta charset="UTF-8">
+<title>PawPort Reminder System</title>
+<style>
+.site-header {
+	background: white;
+	border-bottom: 1px solid #dbe4f0;
+	position: sticky;
+	top: 0;
+	z-index: 10;
+}
+
+.navbar {
+	width: min(1200px, 94%);
+	margin: 0 auto;
+	padding: 14px 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 16px;
+	flex-wrap: wrap;
+}
+
+.logo {
+	font-size: 1.6rem;
+	font-weight: 800;
+	color: #2563eb;
+}
+
+.nav-links {
+	display: flex;
+	gap: 10px;
+	flex-wrap: wrap;
+}
+
+.nav-links a {
+	text-decoration: none;
+	color: #1f2937;
+	background: #f3f4f6;
+	border: 1px solid #dbe4f0;
+	padding: 10px 14px;
+	border-radius: 12px;
+	font-weight: 600;
+}
+
+.nav-links a:hover {
+	background: #eff6ff;
+	color: #2563eb;
+}
+
+.nav-links .login-btn {
+	background: #2563eb;
+	color: white;
+	border-color: #2563eb;
+}
+</style>
 </head>
 
 <body>
+	<header class="site-header">
+		<nav class="navbar">
+			<div class="logo">🐾 PawPort</div>
 
-<h1>PawPort Reminder System</h1>
+			<div class="nav-links">
+				<a href="login" class="login-btn">Login</a> <a href="register.jsp">Register</a>
+				<a href="search.html">Search</a> <a href="viewprofile.html">Profile</a>
+				<a href="wishlist">Wishlist</a> <a href="Reminders.html">Reminders</a>
+				<a href="documentVault.jsp">Vault</a>
+			</div>
+		</nav>
+	</header>
 
-<input id="name" placeholder="Name"><br>
-<input id="description" placeholder="Description"><br>
-<input type="date" id="date"><br>
-<input type="time" id="time"><br>
-<input id="email" placeholder="Email"><br><br>
+	<h1>PawPort Reminder System</h1>
 
-<button onclick="addReminder()">Add Reminder</button>
+	<input id="name" placeholder="Name">
+	<br>
+	<input id="description" placeholder="Description">
+	<br>
+	<input type="date" id="date">
+	<br>
+	<input type="time" id="time">
+	<br>
+	<input id="email" placeholder="Email">
+	<br>
+	<br>
 
-<p id="status"></p>
+	<button onclick="addReminder()">Add Reminder</button>
 
-<h2>Reminders:</h2>
-<ul id="list"></ul>
+	<p id="status"></p>
 
-<script>
+	<h2>Reminders:</h2>
+	<ul id="list"></ul>
+
+	<script>
 
 function addReminder() {
 

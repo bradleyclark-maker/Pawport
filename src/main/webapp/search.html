@@ -1,389 +1,401 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PawPort Search</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PawPort Search</title>
 
-  <style>
-    * { box-sizing: border-box; }
+<style>
+* {
+	box-sizing: border-box;
+}
 
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #f6f8fb;
-      color: #1f2937;
-    }
+body {
+	margin: 0;
+	font-family: Arial, Helvetica, sans-serif;
+	background: #f6f8fb;
+	color: #1f2937;
+}
 
-    .site-header {
-      background: white;
-      border-bottom: 1px solid #dbe4f0;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
+.site-header {
+	background: white;
+	border-bottom: 1px solid #dbe4f0;
+	position: sticky;
+	top: 0;
+	z-index: 10;
+}
 
-    .navbar {
-      width: min(1200px, 94%);
-      margin: 0 auto;
-      padding: 14px 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
+.navbar {
+	width: min(1200px, 94%);
+	margin: 0 auto;
+	padding: 14px 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 16px;
+	flex-wrap: wrap;
+}
 
-    .logo {
-      font-size: 1.6rem;
-      font-weight: 800;
-      color: #2563eb;
-    }
+.logo {
+	font-size: 1.6rem;
+	font-weight: 800;
+	color: #2563eb;
+}
 
-    .nav-links {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
+.nav-links {
+	display: flex;
+	gap: 10px;
+	flex-wrap: wrap;
+}
 
-    .nav-links a {
-      text-decoration: none;
-      color: #1f2937;
-      background: #f3f4f6;
-      border: 1px solid #dbe4f0;
-      padding: 10px 14px;
-      border-radius: 12px;
-      font-weight: 600;
-    }
+.nav-links a {
+	text-decoration: none;
+	color: #1f2937;
+	background: #f3f4f6;
+	border: 1px solid #dbe4f0;
+	padding: 10px 14px;
+	border-radius: 12px;
+	font-weight: 600;
+}
 
-    .nav-links a:hover {
-      background: #eff6ff;
-      color: #2563eb;
-    }
+.nav-links a:hover {
+	background: #eff6ff;
+	color: #2563eb;
+}
 
-    .nav-links .login-btn {
-      background: #2563eb;
-      color: white;
-      border-color: #2563eb;
-    }
+.nav-links .login-btn {
+	background: #2563eb;
+	color: white;
+	border-color: #2563eb;
+}
 
-    .banner {
-      background: linear-gradient(135deg, #eaf4ff, #ffffff);
-      padding: 60px 20px;
-      text-align: center;
-      border-bottom: 1px solid #dbe4f0;
-    }
+.banner {
+	background: linear-gradient(135deg, #eaf4ff, #ffffff);
+	padding: 60px 20px;
+	text-align: center;
+	border-bottom: 1px solid #dbe4f0;
+}
 
-    .banner h1 {
-      margin: 0 0 10px;
-      font-size: 2.7rem;
-      color: #0f2f75;
-    }
+.banner h1 {
+	margin: 0 0 10px;
+	font-size: 2.7rem;
+	color: #0f2f75;
+}
 
-    .banner p {
-      margin: 0;
-      color: #4b5563;
-      font-size: 1.1rem;
-    }
+.banner p {
+	margin: 0;
+	color: #4b5563;
+	font-size: 1.1rem;
+}
 
-    .container {
-      width: min(1100px, 92%);
-      margin: 0 auto;
-      padding: 32px 0 48px;
-    }
+.container {
+	width: min(1100px, 92%);
+	margin: 0 auto;
+	padding: 32px 0 48px;
+}
 
-    .hero {
-      background: white;
-      border: 1px solid #dbe4f0;
-      border-radius: 18px;
-      padding: 28px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.06);
-      margin-bottom: 24px;
-    }
+.hero {
+	background: white;
+	border: 1px solid #dbe4f0;
+	border-radius: 18px;
+	padding: 28px;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+	margin-bottom: 24px;
+}
 
-    .hero h2 {
-      margin: 0 0 10px;
-      font-size: 2rem;
-    }
+.hero h2 {
+	margin: 0 0 10px;
+	font-size: 2rem;
+}
 
-    .hero p {
-      margin: 0;
-      color: #4b5563;
-      line-height: 1.6;
-    }
+.hero p {
+	margin: 0;
+	color: #4b5563;
+	line-height: 1.6;
+}
 
-    .search-panel {
-      margin-top: 22px;
-      display: grid;
-      grid-template-columns: 1.6fr 1fr 1fr auto;
-      gap: 12px;
-    }
+.search-panel {
+	margin-top: 22px;
+	display: grid;
+	grid-template-columns: 1.6fr 1fr 1fr auto;
+	gap: 12px;
+}
 
-    input, select, button {
-      padding: 14px;
-      border-radius: 12px;
-      border: 1px solid #cfd8e3;
-      font-size: 1rem;
-    }
+input, select, button {
+	padding: 14px;
+	border-radius: 12px;
+	border: 1px solid #cfd8e3;
+	font-size: 1rem;
+}
 
-    button {
-      background: #2563eb;
-      color: white;
-      border: none;
-      cursor: pointer;
-      font-weight: 600;
-    }
+button {
+	background: #2563eb;
+	color: white;
+	border: none;
+	cursor: pointer;
+	font-weight: 600;
+}
 
-    button:hover {
-      background: #1d4ed8;
-    }
+button:hover {
+	background: #1d4ed8;
+}
 
-    .toolbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 18px 0 16px;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
+.toolbar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: 18px 0 16px;
+	gap: 12px;
+	flex-wrap: wrap;
+}
 
-    .result-count {
-      font-weight: 700;
-      color: #374151;
-    }
+.result-count {
+	font-weight: 700;
+	color: #374151;
+}
 
-    .clear-btn {
-      background: #e5e7eb;
-      color: #111827;
-    }
+.clear-btn {
+	background: #e5e7eb;
+	color: #111827;
+}
 
-    .clear-btn:hover {
-      background: #d1d5db;
-    }
+.clear-btn:hover {
+	background: #d1d5db;
+}
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 18px;
-    }
+.grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+	gap: 18px;
+}
 
-    .card {
-      background: white;
-      border: 1px solid #dbe4f0;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.05);
-      display: flex;
-      flex-direction: column;
-    }
+.card {
+	background: white;
+	border: 1px solid #dbe4f0;
+	border-radius: 16px;
+	overflow: hidden;
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+	display: flex;
+	flex-direction: column;
+}
 
-    .card-image {
-      height: 150px;
-      background: linear-gradient(135deg, #dbeafe, #fce7f3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 3rem;
-    }
+.card-image {
+	height: 150px;
+	background: linear-gradient(135deg, #dbeafe, #fce7f3);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 3rem;
+}
 
-    .card-body {
-      padding: 18px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      flex: 1;
-    }
+.card-body {
+	padding: 18px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	flex: 1;
+}
 
-    .badge {
-      background: #eff6ff;
-      color: #1d4ed8;
-      border: 1px solid #bfdbfe;
-      padding: 6px 10px;
-      border-radius: 999px;
-      font-size: 0.84rem;
-      font-weight: 700;
-      width: fit-content;
-    }
+.badge {
+	background: #eff6ff;
+	color: #1d4ed8;
+	border: 1px solid #bfdbfe;
+	padding: 6px 10px;
+	border-radius: 999px;
+	font-size: 0.84rem;
+	font-weight: 700;
+	width: fit-content;
+}
 
-    .location {
-      color: #6b7280;
-    }
+.location {
+	color: #6b7280;
+}
 
-    .description {
-      color: #4b5563;
-      line-height: 1.5;
-      flex: 1;
-    }
+.description {
+	color: #4b5563;
+	line-height: 1.5;
+	flex: 1;
+}
 
-    .price {
-      font-weight: 700;
-      color: #111827;
-    }
+.price {
+	font-weight: 700;
+	color: #111827;
+}
 
-    .empty-state {
-      display: none;
-      text-align: center;
-      background: white;
-      border: 1px dashed #cbd5e1;
-      border-radius: 16px;
-      padding: 40px 20px;
-      color: #4b5563;
-    }
+.empty-state {
+	display: none;
+	text-align: center;
+	background: white;
+	border: 1px dashed #cbd5e1;
+	border-radius: 16px;
+	padding: 40px 20px;
+	color: #4b5563;
+}
 
-    .footer-note {
-      margin-top: 18px;
-      color: #6b7280;
-      font-size: 0.93rem;
-    }
+.footer-note {
+	margin-top: 18px;
+	color: #6b7280;
+	font-size: 0.93rem;
+}
 
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 100;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.6);
-      padding: 24px;
-    }
+.modal {
+	display: none;
+	position: fixed;
+	z-index: 100;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.6);
+	padding: 24px;
+}
 
-    .modal-content {
-      background: white;
-      width: min(650px, 95%);
-      margin: 70px auto;
-      border-radius: 18px;
-      padding: 26px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.25);
-      position: relative;
-    }
+.modal-content {
+	background: white;
+	width: min(650px, 95%);
+	margin: 70px auto;
+	border-radius: 18px;
+	padding: 26px;
+	box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+	position: relative;
+}
 
-    .close-btn {
-      position: absolute;
-      right: 18px;
-      top: 14px;
-      font-size: 1.6rem;
-      cursor: pointer;
-      color: #6b7280;
-    }
+.close-btn {
+	position: absolute;
+	right: 18px;
+	top: 14px;
+	font-size: 1.6rem;
+	cursor: pointer;
+	color: #6b7280;
+}
 
-    .profile-info {
-      display: grid;
-      gap: 10px;
-      margin-top: 14px;
-    }
+.profile-info {
+	display: grid;
+	gap: 10px;
+	margin-top: 14px;
+}
 
-    .profile-info div {
-      background: #f8fafc;
-      border: 1px solid #e5e7eb;
-      padding: 12px;
-      border-radius: 12px;
-    }
+.profile-info div {
+	background: #f8fafc;
+	border: 1px solid #e5e7eb;
+	padding: 12px;
+	border-radius: 12px;
+}
 
-    @media (max-width: 850px) {
-      .search-panel {
-        grid-template-columns: 1fr;
-      }
-
-      .banner h1 {
-        font-size: 2.1rem;
-      }
-
-      .navbar {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-    }
-  </style>
+@media ( max-width : 850px) {
+	.search-panel {
+		grid-template-columns: 1fr;
+	}
+	.banner h1 {
+		font-size: 2.1rem;
+	}
+	.navbar {
+		align-items: flex-start;
+		flex-direction: column;
+	}
+}
+</style>
 </head>
 
 <body>
-  <header class="site-header">
-    <nav class="navbar">
-      <div class="logo">🐾 PawPort</div>
+	<header class="site-header">
+		<nav class="navbar">
+			<div class="logo">🐾 PawPort</div>
 
-      <div class="nav-links">
-        <a href="login" class="login-btn">Login</a>
-        <a href="register.jsp">Register</a>
-        <a href="viewprofile.html">Profile</a>
-        <a href="wishlist">Wishlist</a>
-        <a href="Reminders.html">Reminders</a>
-        <a href="documentVault.jsp">Vault</a>
-      </div>
-    </nav>
-  </header>
+			<div class="nav-links">
+				<a href="login" class="login-btn">Login</a> <a href="register.jsp">Register</a>
+				<a href="search.html">Search</a> <a href="viewprofile.html">Profile</a>
+				<a href="wishlist">Wishlist</a> <a href="Reminders.html">Reminders</a>
+				<a href="documentVault.jsp">Vault</a>
+			</div>
+		</nav>
+	</header>
 
-  <section class="banner">
-    <h1>Find the Best Care for Your Pet</h1>
-    <p>Search trusted pet services, products, records, and resources all in one place.</p>
-  </section>
+	<section class="banner">
+		<h1>Find the Best Care for Your Pet</h1>
+		<p>Search trusted pet services, products, records, and resources
+			all in one place.</p>
+	</section>
 
-  <div class="container">
-    <section class="hero">
-      <h2>PawPort Search</h2>
-      <p>Search pet services, products, and organizations by keyword, category, or location.</p>
+	<div class="container">
+		<section class="hero">
+			<h2>PawPort Search</h2>
+			<p>Search pet services, products, and organizations by keyword,
+				category, or location.</p>
 
-      <div class="search-panel">
-        <input type="text" id="searchInput" placeholder="Search for grooming, vet, dog food, rescue, Texarkana..." />
+			<div class="search-panel">
+				<input type="text" id="searchInput"
+					placeholder="Search for grooming, vet, dog food, rescue, Texarkana..." />
 
-        <select id="categoryFilter">
-          <option value="all">All Categories</option>
-          <option value="Grooming">Grooming</option>
-          <option value="Veterinary">Veterinary</option>
-          <option value="Boarding">Boarding</option>
-          <option value="Rescue">Rescue</option>
-          <option value="Supplies">Supplies</option>
-          <option value="Training">Training</option>
-        </select>
+				<select id="categoryFilter">
+					<option value="all">All Categories</option>
+					<option value="Grooming">Grooming</option>
+					<option value="Veterinary">Veterinary</option>
+					<option value="Boarding">Boarding</option>
+					<option value="Rescue">Rescue</option>
+					<option value="Supplies">Supplies</option>
+					<option value="Training">Training</option>
+				</select> <select id="locationFilter">
+					<option value="all">All Locations</option>
+					<option value="Texarkana">Texarkana</option>
+					<option value="Atlanta">Atlanta</option>
+					<option value="New Boston">New Boston</option>
+					<option value="Nash">Nash</option>
+				</select>
 
-        <select id="locationFilter">
-          <option value="all">All Locations</option>
-          <option value="Texarkana">Texarkana</option>
-          <option value="Atlanta">Atlanta</option>
-          <option value="New Boston">New Boston</option>
-          <option value="Nash">Nash</option>
-        </select>
+				<button id="searchButton">Search</button>
+			</div>
+		</section>
 
-        <button id="searchButton">Search</button>
-      </div>
-    </section>
+		<div class="toolbar">
+			<div class="result-count" id="resultCount">Showing 8 results</div>
+			<button class="clear-btn" id="clearButton">Clear Filters</button>
+		</div>
 
-    <div class="toolbar">
-      <div class="result-count" id="resultCount">Showing 8 results</div>
-      <button class="clear-btn" id="clearButton">Clear Filters</button>
-    </div>
+		<div class="grid" id="resultsGrid"></div>
 
-    <div class="grid" id="resultsGrid"></div>
+		<div class="empty-state" id="emptyState">
+			<h2>No results found</h2>
+			<p>Try a different keyword, category, or location.</p>
+		</div>
 
-    <div class="empty-state" id="emptyState">
-      <h2>No results found</h2>
-      <p>Try a different keyword, category, or location.</p>
-    </div>
+		<p class="footer-note">Browse pet-related services, products, and
+			local organizations in one place.</p>
+	</div>
 
-    <p class="footer-note">
-      Browse pet-related services, products, and local organizations in one place.
-    </p>
-  </div>
+	<div class="modal" id="profileModal">
+		<div class="modal-content">
+			<span class="close-btn" id="closeModal">&times;</span>
+			<h2 id="modalName"></h2>
+			<p id="modalDescription"></p>
 
-  <div class="modal" id="profileModal">
-    <div class="modal-content">
-      <span class="close-btn" id="closeModal">&times;</span>
-      <h2 id="modalName"></h2>
-      <p id="modalDescription"></p>
+			<div class="profile-info">
+				<div>
+					<strong>Category:</strong> <span id="modalCategory"></span>
+				</div>
+				<div>
+					<strong>Location:</strong> <span id="modalLocation"></span>
+				</div>
+				<div>
+					<strong>Address:</strong> <span id="modalAddress"></span>
+				</div>
+				<div>
+					<strong>Email:</strong> <span id="modalEmail"></span>
+				</div>
+				<div>
+					<strong>Hours:</strong> <span id="modalHours"></span>
+				</div>
+				<div>
+					<strong>Phone:</strong> <span id="modalPhone"></span>
+				</div>
+				<div>
+					<strong>Price:</strong> <span id="modalPrice"></span>
+				</div>
+			</div>
+		</div>
+	</div>
 
-      <div class="profile-info">
-        <div><strong>Category:</strong> <span id="modalCategory"></span></div>
-        <div><strong>Location:</strong> <span id="modalLocation"></span></div>
-        <div><strong>Address:</strong> <span id="modalAddress"></span></div>
-        <div><strong>Email:</strong> <span id="modalEmail"></span></div>
-        <div><strong>Hours:</strong> <span id="modalHours"></span></div>
-        <div><strong>Phone:</strong> <span id="modalPhone"></span></div>
-        <div><strong>Price:</strong> <span id="modalPrice"></span></div>
-      </div>
-    </div>
-  </div>
-
-  <script>
+	<script>
     const listings = [
       {
         name: "Happy Tails Grooming",
@@ -608,4 +620,4 @@
   </script>
 </body>
 </html>
-ubuntu@ip-172-31-36-95:~$ 
+ubuntu@ip-172-31-36-95:~$
