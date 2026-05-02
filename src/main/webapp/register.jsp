@@ -164,7 +164,7 @@ button[type="submit"]:hover {
 
 			<h2>Create Your PawPort Account</h2>
 
-			<form action="RegisterServlet" method="POST">
+			<form action="register" method="POST">
 
 				<div class="form-group">
 					<label>First Name</label> <input type="text" name="regfname"
