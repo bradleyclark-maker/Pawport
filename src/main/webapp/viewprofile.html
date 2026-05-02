@@ -1,54 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View Profile</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <script src="viewprofile.js" defer></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>View Profile</title>
+<link rel="stylesheet" href="css/styles.css">
+<script src="viewprofile.js" defer></script>
 </head>
 <body>
-	<button type="button" onclick="window.location.href='search.html'">← Back</button>
-	<button type="button" onclick="window.location.href='editprofile.html'">Edit Profile</button>
+	<header class="site-header">
+		<nav class="navbar">
+			<div class="logo">🐾 PawPort</div>
 
-    <!-- Header: photo + name + status -->
-    <div class="profile-header field">
-        <div class="placeholder-img" id="photo-placeholder">🐾</div>
-        <img id="profile-img" src="" alt="Profile Photo" style="display:none;">
-        <div>
-            <p class="profile-name" id="display-name">Loading...</p>
-            <span class="profile-status" id="display-status"></span>
-        </div>
-    </div>
+			<div class="nav-links">
+				<a href="login" class="login-btn">Login</a> <a href="register.jsp">Register</a>
+				<a href="search.html">Search</a> <a href="viewprofile.html">Profile</a>
+				<a href="wishlist">Wishlist</a> <a href="Reminders.html">Reminders</a>
+				<a href="documentVault.jsp">Vault</a>
+			</div>
+		</nav>
+	</header>
+	<button type="button" onclick="window.location.href='editprofile.html'">Edit
+		Profile</button>
 
-    <!-- Description -->
-    <div class="field" id="description-section" style="display:none;">
-        <label>About</label>
-        <p id="display-description"></p>
-    </div>
+	<!-- Header: photo + name + status -->
+	<div class="profile-header field">
+		<div class="placeholder-img" id="photo-placeholder">🐾</div>
+		<img id="profile-img" src="" alt="Profile Photo"
+			style="display: none;">
+		<div>
+			<p class="profile-name" id="display-name">Loading...</p>
+			<span class="profile-status" id="display-status"></span>
+		</div>
+	</div>
 
-    <!-- Service Type -->
-    <div class="field" id="type-section" style="display:none;">
-        <label>Service Type</label>
-        <div class="tags" id="display-tags"></div>
-    </div>
+	<!-- Description -->
+	<div class="field" id="description-section" style="display: none;">
+		<label>About</label>
+		<p id="display-description"></p>
+	</div>
 
-    <!-- Contact Info -->
-    <div class="field" id="contact-section" style="display:none;">
-        <label>Contact Info</label>
-        <div id="display-contacts"></div>
-    </div>
+	<!-- Service Type -->
+	<div class="field" id="type-section" style="display: none;">
+		<label>Service Type</label>
+		<div class="tags" id="display-tags"></div>
+	</div>
 
-    <!-- Hours -->
-    <div class="field" id="hours-section" style="display:none;">
-        <label>Hours of Operation</label>
-        <div id="display-hours"></div>
-    </div>
+	<!-- Contact Info -->
+	<div class="field" id="contact-section" style="display: none;">
+		<label>Contact Info</label>
+		<div id="display-contacts"></div>
+	</div>
 
-    <!-- Location -->
-    <div class="field" id="location-section" style="display:none;">
-        <label>Location</label>
-        <p id="display-location"></p>
-    </div>
+	<!-- Hours -->
+	<div class="field" id="hours-section" style="display: none;">
+		<label>Hours of Operation</label>
+		<div id="display-hours"></div>
+	</div>
+
+	<!-- Location -->
+	<div class="field" id="location-section" style="display: none;">
+		<label>Location</label>
+		<p id="display-location"></p>
+	</div>
 </body>
 </html>
