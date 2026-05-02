@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>PawPort Reminder System</title>
 <style>
+/* Nav bar */
 .site-header {
 	background: white;
 	border-bottom: 1px solid #dbe4f0;
@@ -55,6 +56,182 @@
 	color: white;
 	border-color: #2563eb;
 }
+
+/* page layout */
+body {
+	font-family: 'Segoe UI', sans-serif;
+	background: #f4f7f6;
+	margin: 0;
+}
+
+.page-wrap {
+	width: min(700px, 94%);
+	margin: 32px auto;
+}
+
+/* card */
+.card {
+	background: white;
+	border-radius: 14px;
+	box-shadow: 0 4px 16px rgba(0, 0, 0, .08);
+	padding: 28px 32px;
+	margin-bottom: 24px;
+}
+
+.card h2 {
+	margin-top: 0;
+	color: #1f2937;
+}
+
+/* form */
+.form-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 12px;
+}
+
+.form-grid .full {
+	grid-column: 1/-1;
+}
+
+label {
+	display: block;
+	font-size: .85rem;
+	font-weight: 600;
+	color: #374151;
+	margin-bottom: 4px;
+}
+
+input[type="text"], input[type="date"], input[type="time"], textarea {
+	width: 100%;
+	padding: 9px 12px;
+	border: 1px solid #d1d5db;
+	border-radius: 8px;
+	font-size: .95rem;
+	box-sizing: border-box;
+	font-family: inherit;
+}
+
+input:focus, textarea:focus {
+	outline: none;
+	border-color: #2563eb;
+	box-shadow: 0 0 0 3px #dbeafe;
+}
+
+textarea {
+	resize: vertical;
+	min-height: 70px;
+}
+
+.btn-primary {
+	background: #2563eb;
+	color: white;
+	border: none;
+	border-radius: 8px;
+	padding: 10px 22px;
+	font-size: .95rem;
+	font-weight: 600;
+	cursor: pointer;
+	margin-top: 6px;
+}
+
+.btn-primary:hover {
+	background: #1d4ed8;
+}
+
+#status {
+	margin-top: 10px;
+	font-weight: 600;
+	min-height: 20px;
+}
+
+#status.ok {
+	color: #16a34a;
+}
+
+#status.err {
+	color: #dc2626;
+}
+
+/* reminder list */
+#list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+#list li {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	gap: 12px;
+	padding: 14px 0;
+	border-bottom: 1px solid #f3f4f6;
+}
+
+#list li:last-child {
+	border-bottom: none;
+}
+
+.reminder-info strong {
+	display: block;
+	color: #1f2937;
+}
+
+.reminder-info span {
+	font-size: .85rem;
+	color: #6b7280;
+}
+
+.badge-sent {
+	font-size: .75rem;
+	background: #dcfce7;
+	color: #15803d;
+	padding: 2px 8px;
+	border-radius: 99px;
+	white-space: nowrap;
+}
+
+.badge-pending {
+	font-size: .75rem;
+	background: #fef9c3;
+	color: #92400e;
+	padding: 2px 8px;
+	border-radius: 99px;
+	white-space: nowrap;
+}
+
+.btn-delete {
+	background: none;
+	border: 1px solid #fca5a5;
+	color: #dc2626;
+	border-radius: 6px;
+	padding: 4px 10px;
+	cursor: pointer;
+	font-size: .8rem;
+	white-space: nowrap;
+}
+
+.btn-delete:hover {
+	background: #fee2e2;
+}
+
+#empty-msg {
+	color: #9ca3af;
+	font-style: italic;
+}
+
+/* not-logged-in banner */
+#auth-warning {
+	display: none;
+	background: #fee2e2;
+	border: 1px solid #fca5a5;
+	color: #b91c1c;
+	border-radius: 10px;
+	padding: 14px 18px;
+	margin-bottom: 20px;
+	font-weight: 600;
+}
 </style>
 </head>
 
@@ -62,7 +239,6 @@
 	<header class="site-header">
 		<nav class="navbar">
 			<div class="logo">🐾 PawPort</div>
-
 			<div class="nav-links">
 				<a href="login" class="login-btn">Login</a> <a href="register.jsp">Register</a>
 				<a href="search.html">Search</a> <a href="viewprofile.html">Profile</a>
@@ -72,74 +248,176 @@
 		</nav>
 	</header>
 
-	<h1>PawPort Reminder System</h1>
+	<div class="page-wrap">
 
-	<input id="name" placeholder="Name">
-	<br>
-	<input id="description" placeholder="Description">
-	<br>
-	<input type="date" id="date">
-	<br>
-	<input type="time" id="time">
-	<br>
-	<input id="email" placeholder="Email">
-	<br>
-	<br>
+		<!-- Shown if the user isn't logged in -->
+		<div id="auth-warning">
+			⚠️ You must be <a href="login">logged in</a> to manage reminders.
+		</div>
 
-	<button onclick="addReminder()">Add Reminder</button>
+		<!-- Add reminder form -->
+		<div class="card" id="form-card">
+			<h2>➕ New Reminder</h2>
+			<div class="form-grid">
+				<div class="full">
+					<label for="name">Reminder Name</label> <input type="text"
+						id="name" placeholder="e.g. Vet appointment">
+				</div>
+				<div class="full">
+					<label for="description">Description</label>
+					<textarea id="description" placeholder="Any extra notes…"></textarea>
+				</div>
+				<div>
+					<label for="date">Date</label> <input type="date" id="date">
+				</div>
+				<div>
+					<label for="time">Time</label> <input type="time" id="time">
+				</div>
+			</div>
+			<!-- No email field — pulled automatically from your account -->
+			<button class="btn-primary" onclick="addReminder()">Set
+				Reminder</button>
+			<p id="status"></p>
+		</div>
 
-	<p id="status"></p>
+		<!-- Reminder list -->
+		<div class="card">
+			<h2>🗓️ Your Reminders</h2>
+			<ul id="list">
+				<li id="empty-msg">Loading…</li>
+			</ul>
+		</div>
 
-	<h2>Reminders:</h2>
-	<ul id="list"></ul>
+	</div>
 
 	<script>
-
+// Add a reminder
 function addReminder() {
+    const name        = document.getElementById("name").value.trim();
+    const description = document.getElementById("description").value.trim();
+    const date        = document.getElementById("date").value;
+    const time        = document.getElementById("time").value;
+    const status      = document.getElementById("status");
 
-    const name = document.getElementById("name").value;
-    const description = document.getElementById("description").value;
-    const date = document.getElementById("date").value;
-    const time = document.getElementById("time").value;
-    const email = document.getElementById("email").value;
+    if (!name || !date || !time) {
+        showStatus("Please fill in name, date, and time.", false);
+        return;
+    }
 
-    fetch("ReminderServlet", { //check servlet
+    fetch("ReminderServlet", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-        },
-        body:
-            "name=" + name +
-            "&description=" + description +
-            "&date=" + date +
-            "&time=" + time +
-            "&email=" + email
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: "name="        + encodeURIComponent(name)
+            + "&description=" + encodeURIComponent(description)
+            + "&date="        + encodeURIComponent(date)
+            + "&time="        + encodeURIComponent(time)
     })
-    .then(res => res.text())
-    .then(data => {
-        document.getElementById("status").innerText = data;
-        loadReminders();
+    .then(res => {
+        if (res.status === 401) { showAuthWarning(); return "NOT_LOGGED_IN"; }
+        return res.text();
     })
-    .catch(err => console.error(err));
-}
-
-function loadReminders() {
-    fetch("ReminderServlet") // check servlet
-    .then(res => res.json())
     .then(data => {
-        const list = document.getElementById("list");
-        list.innerHTML = "";
-        data.forEach(item => {
-            const li = document.createElement("li");
-            li.textContent = item;
-            list.appendChild(li);
-        });
+        if (!data) return;
+        if (data.trim() === "SUCCESS") {
+            showStatus("✅ Reminder saved! You'll receive an email when it's due.", true);
+            // Clear form
+            ["name","description","date","time"].forEach(id =>
+                document.getElementById(id).value = "");
+            loadReminders();
+        } else if (data.trim() === "NOT_LOGGED_IN") {
+            showAuthWarning();
+        } else {
+            showStatus("❌ Something went wrong. Please try again.", false);
+        }
+    })
+    .catch(err => {
+        console.error(err);
+        showStatus("❌ Network error.", false);
     });
 }
 
+// Load this user's reminders
+function loadReminders() {
+    fetch("ReminderServlet")
+    .then(res => {
+        if (res.status === 401) { showAuthWarning(); return "[]"; }
+        return res.text();
+    })
+    .then(text => {
+        let data;
+        try { data = JSON.parse(text); } catch(e) { data = []; }
+
+        const list = document.getElementById("list");
+        list.innerHTML = "";
+
+        if (data.length === 0) {
+            list.innerHTML = "<li id='empty-msg'>No reminders yet.</li>";
+            return;
+        }
+
+        data.forEach(r => {
+            const li = document.createElement("li");
+
+            const badge = r.sent
+                ? "<span class='badge-sent'>✓ Sent</span>"
+                : "<span class='badge-pending'>⏳ Pending</span>";
+
+            li.innerHTML = `
+                <div class="reminder-info">
+                    <strong>${escHtml(r.name)}</strong>
+                    <span>${escHtml(r.description)}</span>
+                    <span>${r.date} at ${r.time} · ${escHtml(r.email)}</span>
+                </div>
+                <div style="display:flex;gap:8px;align-items:center;flex-shrink:0;">
+                    ${badge}
+                    <button class="btn-delete" onclick="deleteReminder(${r.id}, this)">Delete</button>
+                </div>
+            `;
+            list.appendChild(li);
+        });
+    })
+    .catch(err => console.error("Load error:", err));
+}
+
+// Delete a reminder
+function deleteReminder(id, btn) {
+    if (!confirm("Delete this reminder?")) return;
+    btn.disabled = true;
+
+    fetch("ReminderServlet?id=" + id, { method: "DELETE" })
+    .then(res => res.text())
+    .then(data => {
+        if (data.trim() === "DELETED") {
+            loadReminders();
+        } else {
+            alert("Could not delete reminder.");
+            btn.disabled = false;
+        }
+    })
+    .catch(err => { console.error(err); btn.disabled = false; });
+}
+
+// Helpers
+function showStatus(msg, ok) {
+    const el = document.getElementById("status");
+    el.textContent = msg;
+    el.className = ok ? "ok" : "err";
+}
+
+function showAuthWarning() {
+    document.getElementById("auth-warning").style.display = "block";
+    document.getElementById("form-card").style.opacity   = "0.4";
+    document.getElementById("form-card").style.pointerEvents = "none";
+}
+
+function escHtml(str) {
+    if (!str) return "";
+    return str.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+              .replace(/"/g,"&quot;").replace(/'/g,"&#39;");
+}
+
+// Init
 window.onload = loadReminders;
-
 </script>
-
 </body>
 </html>
